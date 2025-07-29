@@ -32,7 +32,6 @@ impl Point {
 
     pub fn draw(self, image :&mut Image){
         let red = Color::rgba(255, 0, 0, 255); // solid red
-
-        image.set_pixel(0,0, red).unwrap();
+        image.set_pixel(self.x,self.y, red).unwrap();
     }
 }
