@@ -25,12 +25,14 @@ impl Point {
     pub fn random(width: i32, height: i32)-> Point{
         let mut rng = rand::rng();
 
-        let x = rng.random::<i32>();
-        let y = rng.random::<i32>();
+        let x : i32 = rng.random_range(0..width);
+        let y : i32 = rng.random_range(0..height);
         return Point::new(x, y);
     }
 
     pub fn draw(self, image :&mut Image){
+        let red = Color::rgba(255, 0, 0, 255); // solid red
 
+        image.set_pixel(0,0, red).unwrap();
     }
 }
