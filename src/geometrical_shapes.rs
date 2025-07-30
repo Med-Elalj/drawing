@@ -57,22 +57,30 @@ impl Line {
     }
 
     pub fn draw(&self, image: &mut Image) {
-        let red = Color::rgba(255, 0, 0, 255); // solid red
-                                               // fine the line equation
-                                               // find a
-        let ratio = self.ratio(i32::max(image.width, image.height));
-        println!("{:?}",ratio);
-        for i in 0..=i32::max(image.width, image.height) {
-            let j: f64 = i as f64;
-            image.set_pixel((j * ratio.0) as i32 + self.first.x,
-            (j * ratio.1) as i32 + self.first.y, red.clone())
+        let red = Color::rgba(255, 0, 0, 255);
+
+        if self.last.x == self.first.x {
+            for y in self.first.y..=self.last.y {
+                image.set_pixel(self.first.x, y, red.clone())
+            .unwrap();
+            }
+            return;
+        }
+
+        let a = (self.last.y - self.first.y) as f64 / (self.last.x - self.first.x) as f64;
+        let b = self.first.y as f64- a * self.first.x as f64;
+
+        // println!("{:?}",ratio);
+        for x in self.first.x..=self.last.x {
+            // let j: f64 = i as f64;
+            image.set_pixel(x,(x as f64 * a + b) as i32, red.clone())
             .unwrap();
         }
     }
 
-    pub fn ratio(&self,size : i32) -> (f64,f64) {  // percentage dx / x max // smaller than 1 0
-        (((self.last.x-self.first.x) as f64) / size /*width*/ as f64,
-        ((self.last.y-self.first.y) as f64) / size /*height*/ as f64)
+    pub fn ratio(&self,size : i32) -> (f64,f64) {
+        (((self.last.x-self.first.x) as f64) / size as f64,
+        ((self.last.y-self.first.y) as f64) / size as f64)
     }
 }
 
