@@ -5,7 +5,7 @@ use gs::{Displayable, Drawable};
 use raster::{Color, Image};
 
 fn main() {
-    let mut image = Image::blank(1000, 1000);
+    let mut image = Image::blank(1000, 500);
 
     gs::Line::random(image.width, image.height).draw(&mut image);
     //

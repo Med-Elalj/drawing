@@ -60,19 +60,19 @@ impl Line {
         let red = Color::rgba(255, 0, 0, 255); // solid red
                                                // fine the line equation
                                                // find a
-        let ratio = self.ratio(image.width);
+        let ratio = self.ratio(i32::max(image.width, image.height));
         println!("{:?}",ratio);
-
-        for i in 0..=image.width {
+        for i in 0..=i32::max(image.width, image.height) {
             let j: f64 = i as f64;
-            image.set_pixel((j * ratio.0) as i32 + self.first.x,(j * ratio.1) as i32 + self.first.y, red.clone())
+            image.set_pixel((j * ratio.0) as i32 + self.first.x,
+            (j * ratio.1) as i32 + self.first.y, red.clone())
             .unwrap();
+        }
     }
-    // println!("{} {}",(j * ratio.0) as i32 + self.first.x,(j * ratio.1) as i32 + self.first.y);
-}
-    pub fn ratio(&self,size : i32) -> (f64,f64) {
-        (((self.last.x-self.first.x) as f64) / size as f64,
-        ((self.last.y-self.first.y) as f64) / size as f64)
+
+    pub fn ratio(&self,size : i32) -> (f64,f64) {  // percentage dx / x max // smaller than 1 0
+        (((self.last.x-self.first.x) as f64) / size /*width*/ as f64,
+        ((self.last.y-self.first.y) as f64) / size /*height*/ as f64)
     }
 }
 
